@@ -1,0 +1,24 @@
+@function px2rem($px){
+	$rem: 37.5px;
+	@return ($px / $rem) + rem;
+}
+.header{
+	.header-content{
+		height: px2rem(40px);
+		background: red;
+		font-size: 0;
+
+	}
+	.header-item{
+		display: inline-block;
+		font-size: px2rem(16px);
+		color: #ddd;
+		line-height: px2rem(40px);
+		width: calc(100% / 6);
+		text-align: center;
+		&.active{
+			font-size:px2rem(17px);
+ 			color:#fff;
+		}
+	}	
+}
