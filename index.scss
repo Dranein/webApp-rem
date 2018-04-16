@@ -2,23 +2,71 @@
 	$rem: 37.5px;
 	@return ($px / $rem) + rem;
 }
-.header{
-	.header-content{
+.game{
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	background-color: #ddd;
+	.game-content{
 		height: px2rem(40px);
-		background: red;
+		background: #ccc;
 		font-size: 0;
-
+		text-align: center;
+		height: auto;
 	}
-	.header-item{
+	.game-item{
+		position: relative;
 		display: inline-block;
 		font-size: px2rem(16px);
 		color: #ddd;
 		line-height: px2rem(40px);
-		width: calc(100% / 6);
+		width:calc(100% / 3);
+		width: px2rem(100px);
+		height: px2rem(100px);
+		background-color: #999;
 		text-align: center;
-		&.active{
-			font-size:px2rem(17px);
- 			color:#fff;
+		margin: px2rem(10px);
+		border-radius: px2rem(49px);
+		box-shadow: 0 0 px2rem(10px) #111;
+		overflow: hidden;
+		.item-mouse{
+			position: absolute;
+			display: inline-block;
+			background-color: #bbbfed;
+			top: px2rem(80px);
+			left: px2rem(25px);
+			width: px2rem(50px);
+			height: px2rem(100px);
+			&.active{
+				animation: mouseMove 2s;
+				/*transition:all 2000ms;*/
+				top: px2rem(20px);
+			}
+			@keyframes mouseMove{
+				0% {top: px2rem(80px);}
+				50% {top: px2rem(20px);}
+				100% {top: px2rem(80px);}
+			}
 		}
 	}	
+	#startGameBtn{
+		border-radius: px2rem(4px);
+		font-size: px2rem(18px);
+		background-color: #ddd;
+		border:1px solid #111;
+		background-color: #fff;
+		padding: px2rem(5px) px2rem(10px);
+		margin-left:px2rem(18px);
+	}
+	.ganme-time{
+		display: inline-block;
+		font-size: px2rem(18px);
+		color: #666;
+		em{
+			font-style:normal;
+			color: red;
+		}
+	}
 }
