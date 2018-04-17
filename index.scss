@@ -34,14 +34,23 @@
 		.item-mouse{
 			position: absolute;
 			display: inline-block;
-			background-color: #bbbfed;
 			top: px2rem(80px);
 			left: px2rem(25px);
 			width: px2rem(50px);
 			height: px2rem(100px);
-			&.active{
-				animation: mouseMove 2s;
-				/*transition:all 2000ms;*/
+			background-color: #bbbfed;
+			&.active0{
+				background-color: red;
+			}
+			&.active1{
+				background-color: #bbbfed;
+			}
+			&.active2{
+				background-color: #bbbfed;
+			}	
+			&.active0,&.active1,&.active2{
+				animation: mouseMove ease;
+				animation-duration:3s;
 				top: px2rem(20px);
 			}
 			@keyframes mouseMove{

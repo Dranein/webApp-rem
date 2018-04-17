@@ -1,48 +1,61 @@
 import $ from 'jquery'
 
 const gameplay = {
-	gameplay:function(time,timeCallBack,callback){
+	gameplay:function(rate,speed,time,timeCallBack,scorecallback,endCallback){
 		// 分数
 		var count = 0;
-		// 地鼠出现的速度1s
-		var speed = 1000;
+		var speed = speed;
 		var $mouseList = $('#gameplay .item-mouse');
 		var mouseLen = $mouseList.length;
+		// 开始游戏
 		startTime(time,()=>{
-			// 获取分数
-			if(callback) callback(count);
+			// 游戏结束，获取分数
+			if(endCallback) endCallback(count);
 		});
+		// 老鼠定时出现
 		setInterval(()=>{
 			// 随机出现的老鼠，个数由分数决定；
 			var targetRandomList = gameClass();
 			targetRandomList.map((o)=>{
 				var $target = $($mouseList[o]);
 				if($target.attr("class") == 'item-mouse'){
-					$target.addClass('active');
+					$target.css({'animation-duration':speed/1000+'s'})
+					var randomActive = parseInt(Math.random()*3);
+					console.log(randomActive)
+					$target.addClass('active'+randomActive);
 					// 打到地鼠，清除定时器，并消失，计一分
 					$target.click(()=>{
 						clearTimeout($target.timeout);
+						if($target.hasClass('active0')){
+							count++;
+							if(scorecallback) scorecallback(count);
+						}
 						removeActive($target);
-						count++;
 					})
-					// 与css动画时间一致；设置一个定时器，2s后没有点击便消失
+					// 与css动画时间一致；设置一个定时器
 					$target.timeout = setTimeout(()=>{
 						removeActive($target);
-					}, 2000);
+					}, speed);
 				}
 			})
-		},speed)
+		},rate)
+		// 游戏难度
 		function gameClass(){
 			var targetRandomList = [];
 			if(count<3){
+				speed = 3000;
 				targetRandomList = getRandomList(mouseLen,1);
 			}else if(count<7){
+				speed = 2800;
 				targetRandomList = getRandomList(mouseLen,2);
 			}else if(count<12){
+				speed = 2500;
 				targetRandomList = getRandomList(mouseLen,3);
 			}else if(count<20){
+				speed = 2300;
 				targetRandomList = getRandomList(mouseLen,4);
 			}else{
+				speed = 2000;
 				targetRandomList = getRandomList(mouseLen,5);
 			}
 			return targetRandomList;
@@ -61,15 +74,15 @@ const gameplay = {
 		};
 		// 去处地鼠active并移除click事件
 		function removeActive(obj){
-			obj.removeClass('active');
+			obj.attr({'class':'item-mouse'});
 			obj.unbind("click")
 		};
 		// 计时器，传入时间和时间完成后的callback
 		function startTime(time,callback){
 			var startTime = 0;
 			var gameTimeIn = setInterval(()=>{
-				startTime++;
-				if(timeCallBack) timeCallBack(startTime+1);
+				++startTime;
+				if(timeCallBack) timeCallBack(startTime);
 				if(startTime>time){
 					clearInterval(gameTimeIn);
 					if(callback) callback();
